@@ -40,4 +40,15 @@ class Device(models.Model):
 
     def __str__(self):
         """Unicode representation of Device."""
-        return f'{self.gateway.name} {self.gateway.ipv4} {self.uid}'
+        if self.gateway is not None:
+            return f'{self.vendor} {self.gateway.ipv4} {self.uid} {self.status}'
+        return f'{self.vendor} {self.created_on} {self.status}'
+
+
+    def save(self, *args, **kwargs):
+        if self.gateway is not None:
+            #import pdb; pdb.set_trace()
+            print(f"{self.gateway.name} {len(self.gateway.device_set.all())}")
+            if len(self.gateway.device_set.all()) >= 10:
+                raise ValidationError("Maximum (10) of connected devices reached")
+        return super().save(*args, **kwargs)
