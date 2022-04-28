@@ -30,7 +30,6 @@ class Device(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     status = models.CharField(choices=STATUSES, max_length=30)
 
-
     # TODO: Define fields here
 
     class Meta:
@@ -42,7 +41,3 @@ class Device(models.Model):
     def __str__(self):
         """Unicode representation of Device."""
         return f'{self.gateway.name} {self.gateway.ipv4} {self.uid}'
-
-    def save(self):
-        """Save method for Device."""
-        pass
