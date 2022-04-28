@@ -4,7 +4,7 @@ from .views import *
 
 routing = DefaultRouter()
 routing.register('gateways', GatewayApi, "gateways")
-routing.register('devices', DevicesApi, "devices")
+routing.register('devices', DeviceApi, "devices")
 
 
 urlpatterns = [] + routing.urls

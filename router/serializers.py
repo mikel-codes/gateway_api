@@ -1,4 +1,4 @@
-from rest_framework.serializers import ValidationError, ModelSerializer,
+from rest_framework.serializers import ValidationError, ModelSerializer
 from .models import Gateway, Device
 
 class DeviceSerializer(ModelSerializer):
