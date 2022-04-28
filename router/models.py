@@ -27,6 +27,7 @@ class Device(models.Model):
     gateway = models.ForeignKey("Gateway", on_delete=models.PROTECT)
     vendor = models.CharField(max_length=100)
     uid = models.BigIntegerField()
+    created_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     status = models.CharField(choices=STATUSES, max_length=30)
 
 
