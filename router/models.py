@@ -30,11 +30,16 @@ class Device(models.Model):
         ("off", _("offline"))
     )
     # in django this is the many -> one rel.
-    gateway = models.ForeignKey("Gateway", on_delete=models.PROTECT)
+    """
+        in order to treat each device as its own object I attached null, blank
+        as this treats a device as existent without or with gateway connection
+
+    """
+    gateway = models.ForeignKey("Gateway", on_delete=models.PROTECT, validators=[restrict_amount,], null=True, blank=True )
     vendor = models.CharField(max_length=100)
-    uid = models.BigIntegerField()
+    uid = models.BigIntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
     created_on = models.DateTimeField(auto_now_add=True, auto_now=False)
-    status = models.CharField(choices=STATUSES, max_length=30)
+    status = models.CharField(choices=STATUSES, max_length=30, default=_("off"))
 
     # TODO: Define fields here
 
