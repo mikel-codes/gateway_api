@@ -1,20 +1,24 @@
-from rest_framework.serializers import ValidationError, ModelSerializer
+from rest_framework.serializers import ValidationError, ModelSerializer, CharField
 from .models import Gateway, Device
 
 class DeviceSerializer(ModelSerializer):
     """ Converts the Device Python Object to JSON """
+    status_name = CharField(source="get_status_display", read_only=True, required=False)
     class Meta:
         model = Device
-        fields = ("id", "gateway", "uid", "created_on", "vendor")
+        fields = ("id", "gateway", "uid", "status", "created_on", "vendor", "status_name")
+        read_only_fields = ("id", "status", "uid")
+
 
 class GatewaySerializer(ModelSerializer):
     """ Converts the Gateway Python Object to JSON """
-    devices = DeviceSerializer(many=True, read_only=True) #json -> FK(many=True)
+
     class Meta:
         model = Gateway
-        fields = ("id", "name", "ipv4", "devices")
+        fields = ("id", "name", "ipv4", "device_set")
+        read_only_fields = ("id", )
 
-    def validate(self, data):
-        if self.id and len(self.devices) == 10:
-            raise ValidationError("maximum limit of connected devices reached")
-        return super().validate(data)
+    def to_representation(self, value):
+        repr = super().to_representation(value)
+        repr['devices'] = DeviceSerializer(value.device_set, many=True, source="device_set").data #json -> FK(many=True)
+        return repr
