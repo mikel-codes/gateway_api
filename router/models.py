@@ -5,9 +5,8 @@ from django.core.exceptions import ValidationError
 # Create your models here
 
 def restrict_amount(value):
-    import pdb; pdb.set_trace()
     if Device.objects.filter(gateway=value.id).count() >= 10:
-        raise ValidationError('Maximum number of connected devices reached')
+        raise ValidationError('Limit(10) of connected devices reached')
 
 class Gateway(models.Model):
     """ Represents a gateway of the router """
@@ -23,8 +22,10 @@ class Gateway(models.Model):
         return f'{self.serial} {self.name}'
 
 
+
 class Device(models.Model):
     """ Represents a single peripheral device."""
+
     STATUSES = (
         ("on", _("online")),
         ("off", _("offline"))
@@ -35,9 +36,11 @@ class Device(models.Model):
         as this treats a device as existent without or with gateway connection
 
     """
+
+
     gateway = models.ForeignKey("Gateway", on_delete=models.PROTECT, validators=[restrict_amount,], null=True, blank=True )
     vendor = models.CharField(max_length=100)
-    uid = models.BigIntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(10)])
+    uid = models.BigIntegerField(null=True, blank=True, validators=[MinValueValidator(1), MaxValueValidator(11)])
     created_on = models.DateTimeField(auto_now_add=True, auto_now=False)
     status = models.CharField(choices=STATUSES, max_length=30, default=_("off"))
 
