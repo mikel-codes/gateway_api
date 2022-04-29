@@ -41,7 +41,15 @@ class DeviceTest(TestCase):
         assert str(self.device_with_gw) == "Iphone 222222 3 on"
 
     def test_device_with_gw_obj_parsing(self):
-        assert str(self.device_without_gw) == f"Samsung {self.device_without_gw.created_on} on"
+        assert str(self.device_without_gw) == f"Samsung {self.device_without_gw.created_on} off"
+
+    def test_device_changes_when_connected_to_gateway(self):
+        self.device_without_gw.gateway = self.gateway
+        self.device_without_gw.save()
+        assert self.device_without_gw.uid == self.gateway.device_set.count()
+        assert self.device_without_gw.status == "on"
+        assert str(self.device_without_gw) == f"Samsung 222222 {self.device_without_gw.uid} on"
+
 
     def test_device_maximum_on_one_gateway(self):
         """
