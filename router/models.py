@@ -1,13 +1,19 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.validators import validate_ipv4_address, MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 # Create your models here
 
+def restrict_amount(value):
+    import pdb; pdb.set_trace()
+    if Device.objects.filter(gateway=value.id).count() >= 10:
+        raise ValidationError('Maximum number of connected devices reached')
 
 class Gateway(models.Model):
     """ Represents a gateway of the router """
     serial = models.CharField(max_length=200, unique=True)
     name = models.CharField(max_length=100)
-    ipv4 = models.GenericIPAddressField(protocol="IPv4")
+    ipv4 = models.GenericIPAddressField(protocol="IPv4", validators=[validate_ipv4_address])
 
     class Meta:
         verbose_name = _("Gateway")
