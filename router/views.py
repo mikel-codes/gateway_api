@@ -10,12 +10,12 @@ from .models import Gateway, Device
 class GatewayApi(viewsets.ModelViewSet):
     """ automatically adds the CRUD endpoints for this basic gateway api"""
     serializer_class = GatewaySerializer
-    permission_classes = ("AllowAny",)
+    permission_classes = (AllowAny,)
     queryset = Gateway.objects.all()
 
 
 class DeviceApi(viewsets.ModelViewSet):
     """ automatically adds the CRUD endpoints for this basic gateway api"""
     serializer_class = DeviceSerializer
-    permission_classes = ("AllowAny",)
+    permission_classes = (AllowAny,)
     queryset = Device.objects.all()
