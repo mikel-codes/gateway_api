@@ -47,8 +47,12 @@ class Device(models.Model):
 
     def save(self, *args, **kwargs):
         if self.gateway is not None:
-            #import pdb; pdb.set_trace()
-            print(f"{self.gateway.name} {len(self.gateway.device_set.all())}")
+            #print(f"{self.gateway.name} {len(self.gateway.device_set.all())}")
             if len(self.gateway.device_set.all()) >= 10:
                 raise ValidationError("Maximum (10) of connected devices reached")
+            self.status = "on"
+            self.uid = self.gateway.device_set.count() + 1
+        else:
+            self.status = "off"
+            self.uid = None
         return super().save(*args, **kwargs)
