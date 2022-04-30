@@ -15,7 +15,7 @@ class GatewaySerializer(ModelSerializer):
 
     class Meta:
         model = Gateway
-        fields = ("id", "name", "ipv4", "device_set")
+        fields = ("id", "name", "serial", "ipv4", "device_set")
         read_only_fields = ("id", )
 
     def to_representation(self, value):
