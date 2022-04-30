@@ -72,37 +72,9 @@ def test_device_is_created_with_valid_json(api, device_payload, gateway):
     assert content.get('status') == "on"
     assert content.get('status_name') == "online"
 
+"""
 def test_gateway_deleted_does_not_destroy_connected_device_objects(api, gateway):
     devices = baker.make(Device, gateway=gateway, _quantity=3)
     res = api.delete(reverse_lazy("router_api:gateways-detail", kwargs={'pk': gateway.id}))
     import pdb; pdb.set_trace()
-
-
-"""
-def test_gateway_add_device(api, gateway, device):
-    assert gateway.device_set.count() == 0
-    assert device.status == "off"
-    gw = gateway.__dict__.copy()
-    dd = device
-    device_ = Device.objects.get(id=device.id)
-    assert device_.gateway == None
-    gw.pop('_state')
-    device_list =  [*gateway.device_set.all().values_list('id', flat=True)]
-    device_list.append(device.id)
-    gw['device_set'] = device_list
-    #import pdb; pdb.set_trace()
-    res = api.put(reverse_lazy('router_api:gateways-detail', kwargs={"pk": gateway.id}), gw)
-    import pdb; pdb.set_trace()
-    assert res.status_code == 200
-    assert gateway.device_set.count() == 1
-    #fixtures can not be changed they more of static object,
-    #to see the changes in device we have to scout the test database
-    device_obj = Device.objects.get(id=device.id)
-    assert device_obj.gateway != None
-    assert device_obj.status == "on"
-    #assert device.uid ==  1
-
-
-
-
 """

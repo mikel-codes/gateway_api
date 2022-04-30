@@ -12,9 +12,8 @@ def twelve_devices(db):
     return devices
 
 @pytest.fixture
-def gateway(db, device):
+def gateway(db):
     gateway = Gateway.objects.create(serial="92928722211", name="gatewayIII", ipv4="10.0.0.1")
-    #gateway.device_set.add(device)
     return gateway
 
 @pytest.fixture
