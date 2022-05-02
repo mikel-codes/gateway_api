@@ -16,6 +16,8 @@ class DeviceSerializer(ModelSerializer):
             gateway_data.pop('devices')
             gateway_data.pop('device_set')
             repr['gatewayx'] = gateway_data
+        else:
+            repr['gatewayx'] = None
         return repr
 
 class IntermediarySerializer(ModelSerializer):
