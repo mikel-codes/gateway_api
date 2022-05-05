@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'router',
     'rest_framework',
     'corsheaders',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
