@@ -26,7 +26,7 @@ def device_payload(db):
 
 @pytest.fixture
 def gateway_payload(db):
-    return {"serial": "992822111", "name": "Space Jamz", "ipv4":"9220"}
+    return {"serial": "992822111", "name": "Space Jamz", "ipv4":"9.2.2.0"}
 
 
 @pytest.fixture
