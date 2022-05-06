@@ -6,7 +6,7 @@
 ## Setup
 
 The first thing to do is to clone the repository:
-
+github repo -> https://github.com/mikel-codes/gateway_api/
 ```sh
 $ git clone https://github.com/mikel-codes/gateway_api.git
 $ cd gateway_api
