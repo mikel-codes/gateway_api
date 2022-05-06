@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'gateway_api.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=False)
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
@@ -137,4 +137,4 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000', "https://gatewayx.herokuapp.com",
 )
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), databases=False)

@@ -15,6 +15,16 @@ jobs:
       matrix:
         python-version: [3.9]
 
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
@@ -29,6 +39,16 @@ jobs:
     - name: Install Dependencies
       run: |
         pip install -r requirements.txt
-    - name: Run Tests
+
+    - name: Run Migrations
+      env:
+        DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
+      run: |
+        python manage.py makemigrations
+        python manage.py migrate
+
+    - name: Run Test with Pytest
+      env:
+        DATABASE_URL: 'postgres://postgres:postgres@localhost:${{ job.services.postgres.ports[5432] }}/postgres'
       run: |
         pytest

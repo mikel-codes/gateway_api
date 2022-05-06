@@ -7,7 +7,7 @@ from ..models import Gateway, Device
 #settings.configure()
 class GatewayTest(TestCase):
     def setUp(self):
-        self.gateway = Gateway.objects.create(serial="92292889229000", name="gatewayX", ipv4="222222")
+        self.gateway = Gateway.objects.create(serial="92292889229000", name="gatewayX", ipv4="2.2.2.2")
 
     def test_gateway_is_created(self):
         assert Gateway.objects.count() == 1
@@ -17,7 +17,7 @@ class GatewayTest(TestCase):
 
     def test_gateway_serial_is_unique(self):
         with self.assertRaises(IntegrityError):
-            obj, is_created = Gateway.objects.get_or_create(serial="92292889229000", name="gatewayII", ipv4="1111111")
+            obj, is_created = Gateway.objects.get_or_create(serial="92292889229000", name="gatewayII", ipv4="1.1.1.1")
             self.assertFalse(is_created, False)
         assert Gateway.objects.count() == 1
 
@@ -25,7 +25,7 @@ class GatewayTest(TestCase):
 
 class DeviceTest(TestCase):
     def setUp(self):
-        self.gateway = Gateway.objects.create(serial="92292889229000", name="gatewayIII", ipv4="222222")
+        self.gateway = Gateway.objects.create(serial="92292889229000", name="gatewayIII", ipv4="2.2.2.2")
         self.device_with_gw = Device.objects.create(uid=3, gateway=self.gateway, vendor="Iphone", status="on")
         self.device_without_gw = Device.objects.create(uid=3, vendor="Samsung", status="on")
         self.gw =  Gateway.objects.create(serial="11132889229000", name="gatewayIX", ipv4="2.3.2.0")
@@ -48,7 +48,7 @@ class DeviceTest(TestCase):
         self.device_without_gw.save()
         assert self.device_without_gw.uid == self.gateway.device_set.count()
         assert self.device_without_gw.status == "on"
-        assert str(self.device_without_gw) == f"Samsung 222222 {self.device_without_gw.uid} on"
+        assert str(self.device_without_gw) == f"Samsung 2.2.2.2 {self.device_without_gw.uid} on"
 
 
     def test_device_maximum_on_one_gateway(self):

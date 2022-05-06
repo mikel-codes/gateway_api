@@ -1,4 +1,4 @@
-![ci/cd](https://github.com/mikel-codes/gateway_api/actions/workflows/ci.yml/badge.svg)    [![codecov](https://codecov.io/gh/mikel-codes/gateway_api/branch/main/graph/badge.svg)](https://codecov.io/gh/mikel-codes/gateway_api) ![License](https://img.shields.io/github/license/mikel-codes/gateway_api)
+![ci/cd](https://github.com/mikel-codes/gateway_api/actions/workflows/django.yml/badge.svg)    [![codecov](https://codecov.io/gh/mikel-codes/gateway_api/branch/main/graph/badge.svg)](https://codecov.io/gh/mikel-codes/gateway_api) ![License](https://img.shields.io/github/license/mikel-codes/gateway_api)
 
 
 # gateway_api sample application
@@ -6,7 +6,7 @@
 ## Setup
 
 The first thing to do is to clone the repository:
-
+github repo -> https://github.com/mikel-codes/gateway_api/
 ```sh
 $ git clone https://github.com/mikel-codes/gateway_api.git
 $ cd gateway_api
