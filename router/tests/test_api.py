@@ -67,7 +67,7 @@ def test_device_is_created_with_valid_json(api, device_payload, gateway):
     res = api.post(reverse_lazy("router_api:devices-list"),device_payload)
     assert res.status_code == 201
     content = json.loads(res.content)
-    assert content.get('gateway') == 1
+    assert content.get('gateway') == gateway.id
     assert content.get('uid') == gateway.device_set.count()
     assert content.get('status') == "on"
     assert content.get('status_name') == "online"
