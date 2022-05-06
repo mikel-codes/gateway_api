@@ -48,7 +48,7 @@ class DeviceTest(TestCase):
         self.device_without_gw.save()
         assert self.device_without_gw.uid == self.gateway.device_set.count()
         assert self.device_without_gw.status == "on"
-        assert str(self.device_without_gw) == f"Samsung 222222 {self.device_without_gw.uid} on"
+        assert str(self.device_without_gw) == f"Samsung 2.2.2.2 {self.device_without_gw.uid} on"
 
 
     def test_device_maximum_on_one_gateway(self):
